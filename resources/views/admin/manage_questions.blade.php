@@ -1,15 +1,13 @@
 @extends('layouts.app')
 
-@section('jumbotronhead')
-  GK Test Question Add, Delete, Edit and Backup
-@endsection
-
 @section('content')
+<div class="container">
+<h1 class="jumbotron">GK Test Question Add, Delete, Edit and Backup</h1>
 <center>
 @if (Session::has('message'))
     <div class="alert alert-danger"> {{ Session::get('message') }}</div>
 @endif
-  <table>
+  <table class="table table-condensed table-bordered">
     <tr>
         <td colspan="10">
         <center>
@@ -60,4 +58,5 @@
      @endforeach
   </table>
 </center>
+</div>
 @endsection

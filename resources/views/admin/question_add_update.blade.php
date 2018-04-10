@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('jumbotronhead')
   Question Management | {{ (isset($questions)) ? 'Edit' : 'Add' }}

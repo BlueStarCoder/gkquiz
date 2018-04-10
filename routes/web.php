@@ -24,7 +24,7 @@ Route::get('/correct/order/{tableName}/{colName}/{startvalue}/{stopvalue}/{chang
 
 Route::get('/', function () {
     return view('quiz.index');
-});
+})->name('index');
 
 Route::post('/getrollno', 'QuizController@getRollNums');
 Route::post('/getsection', 'QuizController@getSection');
@@ -53,3 +53,7 @@ Route::get('/Delete/{id}', ['as' => 'delete', 'uses' => 'ManageQuestionsControll
 Route::get('/DeleteAll', ['as' => 'deleteAll', 'uses' => 'ManageQuestionsController@deleteAll']);
 Route::get('/Backup', ['as' => 'createBackup', 'uses' => 'ManageQuestionsController@backup']);
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

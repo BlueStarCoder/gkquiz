@@ -1,68 +1,40 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
-    <meta name="csrf_token" content="{{ csrf_token() }}">
-    <!--<title>GK Quiz Time</title>-->
-    <title>GK Quiz Time</title>
+  <!-- CSRF Token -->
+  <meta name="csrf_token" content="{{ csrf_token() }}">
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}" media="screen">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/sweetalert.min.css') }}" media="screen">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/daterangepicker.css') }}" />
+  <title>GK Quiz Time</title>
 
-    <link href="{{ asset('css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" media="screen">
+  <!-- Styles -->
+  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}" media="screen">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/sweetalert.min.css') }}" media="screen">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/daterangepicker.css') }}" />
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/quiz.css') }}">
-    <link rel="shortcut icon" href="{{ asset('diploma.svg') }}" type="image/x-icon" />
-    <style>
-    body {
-      font-family: "Helvetica Neue", Helvetica, Arial;
-      font-size: 14px;
-      line-height: 20px;
-      font-weight: 400;
-      -webkit-font-smoothing: antialiased;
-      font-smoothing: antialiased;
+  <link href="{{ asset('css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" media="screen">
+
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/quiz.css') }}">
+  <link rel="shortcut icon" href="{{ asset('diploma.ico') }}" type="image/x-icon" />
+  <style>
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
       /* color: #3b3b3b;
       background: #cac8c8;
       /* background: #2b2b2b; */
     }
-    table {
-      margin: 0 0 40px 0;
-      width: 100%;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-      display: table;
-      text-align:center;
-    }
+    
     .btn {
       margin: 10px 30px 10px 0;
-    }
-    ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background-color: #333;
-    }
-    li {
-      float: left;
-    }
-
-    li a {
-      display: block;
-      color: white;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-    }
-
-    li a:hover:not(.active) {
-      background-color: #111;
     }
 
     .active {
@@ -76,12 +48,13 @@
       padding-top:27px;
       padding-bottom:27px;
       border-radius:6px;
+      margin: 30px;
     }
 
     .container {
-        padding-right:5px;
-        padding-left:5px;
-        padding-top:3px;
+      padding-right:5px;
+      padding-left:5px;
+      padding-top:3px;
     }
     
     .heading {
@@ -102,18 +75,15 @@
       overflow: hidden;
       overflow-x: auto;
       overflow-y: auto;
-    }   
+    }
+
     .table {
       margin: 0 0 10px 0;
       width: 100%;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
       display: table;
     }
-    @media screen and (max-width: 580px) {
-      .table {
-        display: block;
-      }
-    }   
+
     th {
       font-family: arial, courier, monospace;
       padding: 3px 9px;
@@ -124,30 +94,13 @@
       text-align: center;
       color: #ffffff;
     }
-    .row {
-      display: table-row;
-      background: #f6f6f6;
-    }
-    .row:nth-of-type(odd) {
-      background: #e9e9e9;
-    }
-    .row.header {
-      font-weight: 900;
-      color: #ffffff;
-      background: #ea6153;
-    }
-    .row.green {
-      background: #27ae60;
-    }
-    .row.blue {
-      background: #2980b9;
-    }
+
     @media screen and (max-width: 580px) {
-    .row {
-        padding: 8px 0;
+      .table {
         display: block;
       }
     }
+
     td, .cell {
       font-family: cursive;
       padding: 3px 12px;
@@ -164,22 +117,77 @@
         display: block;
       }
     }
-    </style>
+
+  </style>
 </head>
 <body>
-  <div>
-    <ul>
-      <li><a href="{{ route('record-search') }}" class="active" href="">Record Search</a></li>
-      <li><a href="{{ route('manage-questions') }}">Manage Questions</a></li>
-      <li><a href="{{ route('get-students') }}">Manage Students</a></li>
-      <li style="float:right;"><a href="#">About</a></li>
-    </ul>
-  </div>
-  <div class="container">
-  <h1 class="jumbotron">@yield('jumbotronhead')</h1>
-        @yield('content')
-  </div>
-  <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}" charset="UTF-8"></script>
+  <div id="app">
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+
+          <!-- Collapsed Hamburger -->
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false">
+            <span class="sr-only">Toggle Navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+
+          <!-- Branding Image -->
+          <a class="navbar-brand" href="{{ url('/home') }}">
+            {{ config('app.name', 'Laravel') }}
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="app-navbar-collapse">
+          <!-- Left Side Of Navbar -->
+          <ul class="nav navbar-nav">
+            &nbsp;
+            @auth
+            <li><a href="{{ route('record-search') }}" class="navbar-link">Record Search</a></li>
+            <li><a href="{{ route('manage-questions') }}">Manage Questions</a></li>
+            <li><a href="{{ route('get-students') }}">Manage Students</a></li>
+            @endauth
+          </ul>
+
+          <!-- Right Side Of Navbar -->
+          <ul class="nav navbar-nav navbar-right">
+            <!-- Authentication Links -->
+            @guest
+            <li><a href="{{ route('index') }}">Start Test</a></li>
+            @else
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                {{ Auth::user()->name }} <span class="caret"></span>
+              </a>
+
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="{{ route('logout') }}"
+                  onclick="event.preventDefault();
+                  document.getElementById('logout-form').submit();">
+                  Logout
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                  {{ csrf_field() }}
+                </form>
+              </li>
+            </ul>
+          </li>
+          @endguest
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  @yield('content')
+</div>
+
+<!-- Scripts -->
+<script src="{{ asset('js/app.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.min.js') }}" charset="UTF-8"></script>
   <script type="text/javascript" src="{{ asset('js/moment.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/bootstrap-datetimepicker.js') }}" charset="UTF-8"></script>

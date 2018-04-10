@@ -1,10 +1,8 @@
 @extends('layouts.app')
 
-@section('jumbotronhead')
-  GK Test Students Data Search
-@endsection
-
 @section('content')
+<h1 class="jumbotron">GK Test Students Data Search</h1>
+<div class="container">
 <form action="/admin/fetch-records" method="post"> {{ csrf_field() }}
     <div class="form-group">
         <label for="name" class="control-label col-md-10">Class</label>
@@ -37,4 +35,5 @@
     <hr>
     <button id="submitRecord" class="btn btn-danger form-control">Search</button>
   </form>
+</div>
 @endsection

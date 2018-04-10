@@ -8,11 +8,13 @@ use Illuminate\Http\Request;
 
 class QuizController extends Controller
 {
+    private static $class_questions;
+
     public function index(Request $request)
     {
         $records = ['stdname' => $request->stdname, 'stclass' => $request->stclass, 'stsec' => $request->stsec, 'stroll' => $request->stroll];
-        $questions = Question::where('class', '=', $records['stclass'])->get();
-        return view('quiz.questions', ['stdinfo' => $records ,'questions' => $questions]);
+        $class_questions = Question::where('class', '=', $records['stclass'])->get();
+        return view('quiz.questions', ['stdinfo' => $records ,'questions' => $class_questions]);
     }
 
     public function check(Request $request)
@@ -33,7 +35,7 @@ class QuizController extends Controller
         $stClass = $request->stclass;
         
         $sections = DB::table('Class' . $stClass)->select('section')->distinct()->get();
-        return json_encode($sections);
+        return json_encode($sections); // return response()->json($sections);
     }
 
     public function getRollNums(Request $request)
@@ -47,7 +49,7 @@ class QuizController extends Controller
         $stSection = $request->stsec;
         
         $rollNums = DB::table('Class' . $stClass)->select('rollno')->where('section', '=', $stSection)->get();
-        return json_encode($rollNums);
+        return json_encode($rollNums); // return response()->json($rollNums);
     }
 
     public function getName(Request $request) {
@@ -55,8 +57,8 @@ class QuizController extends Controller
         $stSection = $request->stsec;
         $strollno = $request->stroll;
 
-        $sections = DB::table('Class' . $stClass)->select('studname')->where([['section', '=',$stSection], ['Rollno', '=', $strollno]])->first();
-        return json_encode($sections);
+        $student_name = DB::table('Class' . $stClass)->select('studname')->where([['section', '=',$stSection], ['Rollno', '=', $strollno]])->first();
+        return json_encode($student_name); // return response()->json($student_name);
     }
     
     public function allquest()
@@ -80,6 +82,12 @@ class QuizController extends Controller
                 $totalMarks += $class_questions[$i]->marks;
             }
         }
+        // foreach ($questions as $key => $question) {
+        //     if ( $class_questions[$key]->correct_option === $request->input($key + 1)) {
+        //         $totalMarks += $class_questions[$key]->marks;
+        //     }
+        // }
+
         $result = DB::update("update Class{$stClass} set {$currentDate}='{$totalMarks}' where section='{$stSection}' and rollno='{$strollno}'");
         // DB::table('Class' . $stClass)->update([$currentDate => $totalMarks])->where([['section','=', $stSection], ['rollno', '=', $strollno]]);
         return redirect()->to('/');

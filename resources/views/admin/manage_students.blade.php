@@ -1,10 +1,8 @@
 @extends('layouts.app')
 
-@section('jumbotronhead')
-  Student Management | Add or Update
-@endsection
-
 @section('content')
+<div class="container">
+<h1 class="jumbotron">Student Management | Add or Update</h1>
 <form action = "/admin/manage-students" method = "post"> {{ csrf_field() }}
  <table class="table table-bordered">
     <tr>
@@ -55,4 +53,5 @@
     </tr>
  </table>
 </form>
+</div>
 @endsection
